@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hamza Rachidi — Consultant Développeur Java</title>
+<meta name="description" content="Hamza Rachidi, Consultant Développeur Java — Spring, Java EE, Angular/React. 9 ans d'expérience sur des projets bancaires et assurantiels.">
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0e1013;
+    --bg-panel:#15181d;
+    --bg-panel-alt:#1b1f26;
+    --bg-raised:#1f242c;
+    --text:#e9e7df;
+    --text-dim:#9a978d;
+    --text-faint:#65635c;
+    --border:#282d35;
+    --border-soft:#20242b;
+    --amber:#e8a33d;
+    --amber-dim:#8a6427;
+    --teal:#5bc9b8;
+    --diff-add:#4bb679;
+    --diff-add-bg:rgba(75,182,121,0.1);
+    --diff-del:#dd6b62;
+    --diff-del-bg:rgba(221,107,98,0.08);
+    --mono:'JetBrains Mono', 'Courier New', monospace;
+    --sans:'Inter', -apple-system, sans-serif;
+    --maxw:1040px;
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important;}
+  }
+
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--sans);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    background-image:
+      radial-gradient(circle at 15% 0%, rgba(232,163,61,0.05), transparent 45%),
+      radial-gradient(circle at 85% 15%, rgba(91,201,184,0.04), transparent 40%);
+  }
+
+  a{color:inherit; text-decoration:none;}
+  ::selection{background:var(--amber); color:#12140f;}
+
+  :focus-visible{
+    outline:2px solid var(--amber);
+    outline-offset:3px;
+    border-radius:2px;
+  }
+
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 28px;}
+
+  /* ---------- NAV ---------- */
+  header.nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(14,16,19,0.86);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--border-soft);
+  }
+  .nav-inner{
+    max-width:var(--maxw); margin:0 auto; padding:14px 28px;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .nav-brand{
+    font-family:var(--mono); font-size:14px; font-weight:600; color:var(--text);
+    display:flex; align-items:center; gap:8px;
+  }
+  .nav-brand .dot{width:7px; height:7px; border-radius:50%; background:var(--diff-add); box-shadow:0 0 8px var(--diff-add); display:inline-block;}
+  .nav-links{display:flex; gap:26px; font-family:var(--mono); font-size:13px; color:var(--text-dim);}
+  .nav-links a{transition:color .15s;}
+  .nav-links a:hover{color:var(--amber);}
+  .nav-toggle{display:none; background:none; border:1px solid var(--border); color:var(--text); font-family:var(--mono); padding:6px 10px; border-radius:4px; font-size:12px;}
+
+  @media (max-width:720px){
+    .nav-links{
+      position:fixed; top:53px; left:0; right:0; background:var(--bg-panel);
+      flex-direction:column; gap:0; border-bottom:1px solid var(--border);
+      max-height:0; overflow:hidden; transition:max-height .25s ease;
+    }
+    .nav-links.open{max-height:320px;}
+    .nav-links a{padding:14px 28px; border-top:1px solid var(--border-soft);}
+    .nav-toggle{display:block;}
+  }
+
+  /* ---------- HERO / TERMINAL ---------- */
+  .hero{padding:70px 0 60px;}
+  .terminal{
+    background:var(--bg-panel);
+    border:1px solid var(--border);
+    border-radius:10px;
+    overflow:hidden;
+    box-shadow:0 20px 60px -20px rgba(0,0,0,0.6);
+  }
+  .term-bar{
+    display:flex; align-items:center; gap:8px;
+    padding:11px 16px;
+    background:var(--bg-panel-alt);
+    border-bottom:1px solid var(--border-soft);
+  }
+  .term-dot{width:10px; height:10px; border-radius:50%;}
+  .term-dot.r{background:#e5645c;}
+  .term-dot.y{background:#e5b95c;}
+  .term-dot.g{background:#5cbf6a;}
+  .term-title{
+    margin-left:8px; font-family:var(--mono); font-size:12px; color:var(--text-faint);
+  }
+  .term-body{padding:28px 24px 32px; font-family:var(--mono); font-size:14px;}
+  .term-line{margin-bottom:6px; color:var(--text-dim);}
+  .term-prompt{color:var(--teal);}
+  .term-cmd{color:var(--text);}
+  .term-out{color:var(--text-dim); margin:2px 0 16px 0;}
+  .hero-name{
+    font-family:var(--sans); font-weight:800; letter-spacing:-0.02em;
+    font-size:clamp(30px,5vw,46px); color:var(--text); margin:2px 0 6px;
+  }
+  .hero-role{
+    font-family:var(--mono); color:var(--amber); font-size:15px; margin-bottom:18px;
+  }
+  .caret{display:inline-block; width:9px; height:18px; background:var(--amber); vertical-align:-3px; animation:blink 1s steps(1) infinite;}
+  @keyframes blink{50%{opacity:0;}}
+
+  .hero-tags{display:flex; flex-wrap:wrap; gap:8px; margin-top:16px;}
+  .tag{
+    font-family:var(--mono); font-size:12px; color:var(--text-dim);
+    border:1px solid var(--border); padding:4px 10px; border-radius:20px;
+  }
+
+  .hero-contact{display:flex; flex-wrap:wrap; gap:18px; margin-top:22px; font-family:var(--mono); font-size:13px;}
+  .hero-contact a{color:var(--teal); border-bottom:1px solid transparent; transition:border-color .15s;}
+  .hero-contact a:hover{border-color:var(--teal);}
+
+  /* ---------- SECTION SCAFFOLD ---------- */
+  section{padding:64px 0;}
+  section + section{border-top:1px solid var(--border-soft);}
+  .section-head{margin-bottom:34px;}
+  .section-eyebrow{
+    font-family:var(--mono); font-size:12px; color:var(--text-faint); letter-spacing:.08em;
+  }
+  .section-eyebrow::before{content:'~/'; color:var(--amber);}
+  .section-title{
+    font-family:var(--sans); font-weight:800; font-size:clamp(22px,3.4vw,30px);
+    margin-top:6px; letter-spacing:-0.01em;
+  }
+
+  /* ---------- ABOUT ---------- */
+  .about-grid{display:grid; grid-template-columns:1.1fr 0.9fr; gap:40px;}
+  @media (max-width:800px){.about-grid{grid-template-columns:1fr;}}
+  .about-text p{color:var(--text-dim); margin-bottom:14px; max-width:52ch;}
+  .about-text p:last-child{margin-bottom:0;}
+  .trait-list{list-style:none;}
+  .trait-list li{
+    font-family:var(--mono); font-size:13.5px; color:var(--text);
+    padding:10px 0 10px 22px; border-bottom:1px solid var(--border-soft);
+    position:relative;
+  }
+  .trait-list li:first-child{padding-top:0;}
+  .trait-list li::before{
+    content:'›'; position:absolute; left:0; color:var(--diff-add); font-weight:700;
+  }
+
+  /* ---------- STACK ---------- */
+  .stack-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:16px;}
+  @media (max-width:800px){.stack-grid{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:520px){.stack-grid{grid-template-columns:1fr;}}
+  .stack-card{
+    background:var(--bg-panel); border:1px solid var(--border); border-radius:8px;
+    padding:18px 18px 16px;
+  }
+  .stack-key{
+    font-family:var(--mono); font-size:12.5px; color:var(--teal); margin-bottom:12px;
+    display:flex; align-items:center; gap:6px;
+  }
+  .stack-key::before{content:'"'; color:var(--text-faint);}
+  .stack-key::after{content:'": ['; color:var(--text-faint);}
+  .stack-items{display:flex; flex-wrap:wrap; gap:6px;}
+  .chip{
+    font-family:var(--mono); font-size:11.5px; color:var(--text-dim);
+    background:var(--bg-raised); border:1px solid var(--border-soft);
+    padding:4px 9px; border-radius:5px;
+  }
+
+  /* ---------- EXPERIENCE : GIT LOG ---------- */
+  .gitlog{position:relative; padding-left:26px;}
+  .gitlog::before{
+    content:''; position:absolute; left:5px; top:6px; bottom:6px; width:2px;
+    background:linear-gradient(to bottom, var(--diff-add), var(--border) 90%);
+  }
+  .commit{position:relative; padding-bottom:38px;}
+  .commit:last-child{padding-bottom:0;}
+  .commit-dot{
+    position:absolute; left:-26px; top:4px; width:12px; height:12px; border-radius:50%;
+    background:var(--bg); border:2px solid var(--diff-add);
+  }
+  .commit.is-current .commit-dot{background:var(--diff-add); box-shadow:0 0 0 4px rgba(75,182,121,0.18);}
+  .commit-head{
+    display:flex; flex-wrap:wrap; align-items:baseline; gap:10px 14px; margin-bottom:6px;
+  }
+  .commit-hash{font-family:var(--mono); font-size:12px; color:var(--amber);}
+  .commit-role{font-family:var(--sans); font-weight:700; font-size:17px;}
+  .commit-badge{
+    font-family:var(--mono); font-size:11px; color:var(--diff-add);
+    background:var(--diff-add-bg); border:1px solid rgba(75,182,121,0.3);
+    padding:2px 8px; border-radius:4px;
+  }
+  .commit-meta{
+    font-family:var(--mono); font-size:12.5px; color:var(--text-dim); margin-bottom:12px;
+    display:flex; flex-wrap:wrap; gap:6px 14px;
+  }
+  .commit-meta .co{color:var(--text);}
+  .commit-project{
+    color:var(--text-dim); font-size:14px; margin-bottom:12px; max-width:64ch;
+  }
+  .commit-project b{color:var(--text); font-weight:600;}
+  .commit-tasks{list-style:none; margin-bottom:14px;}
+  .commit-tasks li{
+    font-size:13.5px; color:var(--text-dim); padding:4px 0 4px 16px; position:relative;
+  }
+  .commit-tasks li::before{content:'+'; position:absolute; left:0; color:var(--diff-add); font-family:var(--mono);}
+  .commit-diff{display:flex; flex-wrap:wrap; gap:6px;}
+  .commit-diff .chip{font-size:11px;}
+
+  .commit-toggle{
+    display:none;
+  }
+  @media (max-width:640px){
+    .commit-role{font-size:16px;}
+  }
+
+  /* ---------- FORMATION / LANGUES ---------- */
+  .split{display:grid; grid-template-columns:1fr 1fr; gap:40px;}
+  @media (max-width:720px){.split{grid-template-columns:1fr;}}
+  .edu-item{border-left:2px solid var(--border); padding-left:16px; margin-bottom:22px;}
+  .edu-item:last-child{margin-bottom:0;}
+  .edu-year{font-family:var(--mono); font-size:12px; color:var(--amber);}
+  .edu-title{font-weight:700; margin-top:3px;}
+  .edu-sub{color:var(--text-dim); font-size:13.5px; margin-top:2px;}
+
+  .lang-item{display:flex; justify-content:space-between; align-items:center; padding:12px 0; border-bottom:1px solid var(--border-soft);}
+  .lang-item:first-child{padding-top:0;}
+  .lang-name{font-weight:600;}
+  .lang-level{font-family:var(--mono); font-size:11.5px; color:var(--teal); background:rgba(91,201,184,0.09); border:1px solid rgba(91,201,184,0.25); padding:3px 9px; border-radius:20px;}
+
+  /* ---------- CONTACT / FOOTER ---------- */
+  footer{padding:60px 0 50px;}
+  .contact-card{
+    background:var(--bg-panel); border:1px solid var(--border); border-radius:10px;
+    padding:36px; text-align:center;
+  }
+  .contact-card h2{font-size:clamp(20px,3vw,26px); font-weight:800; margin-bottom:10px;}
+  .contact-card p{color:var(--text-dim); margin-bottom:22px;}
+  .contact-actions{display:flex; flex-wrap:wrap; justify-content:center; gap:12px;}
+  .btn{
+    font-family:var(--mono); font-size:13px; padding:11px 20px; border-radius:6px;
+    border:1px solid var(--border); cursor:pointer; transition:all .15s; background:transparent; color:var(--text);
+  }
+  .btn.primary{background:var(--amber); color:#12140f; border-color:var(--amber); font-weight:700;}
+  .btn.primary:hover{background:#f0ae4d;}
+  .btn:not(.primary):hover{border-color:var(--teal); color:var(--teal);}
+  .btn.copied{background:var(--diff-add); border-color:var(--diff-add); color:#0e1013;}
+
+  .foot-meta{
+    text-align:center; margin-top:34px; font-family:var(--mono); font-size:11.5px; color:var(--text-faint);
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <div class="nav-brand"><span class="dot"></span> hrachidi ~ portfolio</div>
+    <nav class="nav-links" id="navLinks">
+      <a href="#profil">profil</a>
+      <a href="#stack">stack</a>
+      <a href="#experience">experience</a>
+      <a href="#formation">formation</a>
+      <a href="#contact">contact</a>
+    </nav>
+    <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navLinks">menu</button>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- HERO -->
+  <section class="hero" id="top">
+    <div class="terminal">
+      <div class="term-bar">
+        <span class="term-dot r"></span><span class="term-dot y"></span><span class="term-dot g"></span>
+        <span class="term-title">hamza@career — zsh — 92×20</span>
+      </div>
+      <div class="term-body">
+        <div class="term-line"><span class="term-prompt">$</span> <span class="term-cmd">whoami</span></div>
+        <div class="hero-name">Hamza Rachidi</div>
+        <div class="hero-role">Consultant Développeur JAVA · Spring / Angular / React</div>
+
+        <div class="term-line"><span class="term-prompt">$</span> <span class="term-cmd" id="typedCmd"></span><span class="caret"></span></div>
+        <div class="term-out" id="typedOut" style="min-height:1.6em;"></div>
+
+        <div class="hero-tags">
+          <span class="tag">9 ans d'expérience</span>
+          <span class="tag">Secteur banque &amp; assurance</span>
+          <span class="tag">Java · Spring · Angular · React</span>
+        </div>
+
+        <div class="hero-contact">
+          <a href="mailto:hamzaa.rachidii@gmail.com">hamzaa.rachidii@gmail.com</a>
+          <a href="tel:+212664559615">+212 664 55 96 15</a>
+          <a href="tel:+212627630802">+212 627 63 08 02</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROFIL -->
+  <section id="profil">
+    <div class="section-head">
+      <div class="section-eyebrow">profil</div>
+      <h2 class="section-title">Savoir-faire &amp; savoir-être</h2>
+    </div>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>Ingénieur d'État diplômé de l'ENSA Khouribga (2019), je développe depuis 2017 des applications Java d'entreprise pour des clients grands comptes — assurance, banque et crédit à la consommation — en France comme au Maroc.</p>
+        <p>Mon terrain de jeu : la refonte de socles applicatifs, l'implémentation de briques métier complexes (gestion de sinistres, de fraudes, de crédits) et la mise en place de bonnes pratiques d'intégration continue avec les équipes que j'accompagne.</p>
+      </div>
+      <ul class="trait-list">
+        <li>Développement et gestion d'équipe</li>
+        <li>Implication dans des projets nationaux pour des clients renommés</li>
+        <li>Analyse et compréhension des spécifications</li>
+        <li>Adaptation aux contextes projet et organisation</li>
+        <li>Apprentissage rapide de nouvelles technologies</li>
+        <li>Dynamique · Rigoureux · Autonome</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- STACK -->
+  <section id="stack">
+    <div class="section-head">
+      <div class="section-eyebrow">stack</div>
+      <h2 class="section-title">Compétences techniques</h2>
+    </div>
+    <div class="stack-grid">
+      <div class="stack-card">
+        <div class="stack-key">langages_frameworks</div>
+        <div class="stack-items">
+          <span class="chip">Java</span><span class="chip">Spring</span><span class="chip">Spring Boot</span>
+          <span class="chip">Spring Batch</span><span class="chip">Struts 2</span><span class="chip">Hibernate</span>
+          <span class="chip">JPA</span><span class="chip">JSF</span><span class="chip">PrimeFaces</span>
+          <span class="chip">CDI</span><span class="chip">JUnit</span><span class="chip">Maven</span>
+          <span class="chip">Angular</span><span class="chip">React</span><span class="chip">jQuery</span><span class="chip">Ionic</span>
+        </div>
+      </div>
+      <div class="stack-card">
+        <div class="stack-key">architecture</div>
+        <div class="stack-items">
+          <span class="chip">Java EE / J2EE</span><span class="chip">MVC</span><span class="chip">EJB3</span><span class="chip">Web Services / REST</span>
+        </div>
+      </div>
+      <div class="stack-card">
+        <div class="stack-key">bases_de_donnees</div>
+        <div class="stack-items">
+          <span class="chip">MySQL</span><span class="chip">Oracle</span><span class="chip">PostgreSQL</span><span class="chip">MongoDB</span>
+        </div>
+      </div>
+      <div class="stack-card">
+        <div class="stack-key">serveurs</div>
+        <div class="stack-items">
+          <span class="chip">Apache</span><span class="chip">Tomcat</span><span class="chip">JBoss WildFly</span><span class="chip">Liferay</span><span class="chip">Mule</span>
+        </div>
+      </div>
+      <div class="stack-card">
+        <div class="stack-key">outils_ci</div>
+        <div class="stack-items">
+          <span class="chip">Git</span><span class="chip">GitLab</span><span class="chip">SVN</span><span class="chip">Bitbucket</span>
+          <span class="chip">Jenkins</span><span class="chip">Nexus</span>
+        </div>
+      </div>
+      <div class="stack-card">
+        <div class="stack-key">ide</div>
+        <div class="stack-items">
+          <span class="chip">Eclipse</span><span class="chip">IntelliJ</span><span class="chip">Visual Studio</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="section-head">
+      <div class="section-eyebrow">experience</div>
+      <h2 class="section-title">git log --author="Hamza Rachidi"</h2>
+    </div>
+
+    <div class="gitlog">
+
+      <div class="commit is-current">
+        <div class="commit-dot"></div>
+        <div class="commit-head">
+          <span class="commit-hash">#a4f19c2</span>
+          <span class="commit-role">Développeur Java</span>
+          <span class="commit-badge">HEAD → en cours</span>
+        </div>
+        <div class="commit-meta"><span class="co">La Marocaine Vie</span> · depuis mars 2024</div>
+        <ul class="commit-tasks">
+          <li>Participation aux ateliers d'étude et de conception fonctionnelle</li>
+          <li>Implémentation des différentes briques applicatives</li>
+          <li>Maintenance évolutive et corrective</li>
+          <li>Optimisation continue du socle technique</li>
+        </ul>
+        <div class="commit-diff">
+          <span class="chip">Java 7/8</span><span class="chip">Spring Boot</span><span class="chip">Struts 2</span>
+          <span class="chip">Angular</span><span class="chip">React</span><span class="chip">SVN</span><span class="chip">GitLab</span><span class="chip">Maven</span>
+        </div>
+      </div>
+
+      <div class="commit">
+        <div class="commit-dot"></div>
+        <div class="commit-head">
+          <span class="commit-hash">#7e02b81</span>
+          <span class="commit-role">Développeur Java</span>
+        </div>
+        <div class="commit-meta"><span class="co">AXA</span> · avril 2023 – mars 2024</div>
+        <div class="commit-project"><b>Gestion des fraudes · Gestion des sinistres matériels</b> — application de gestion des actions des investigateurs, experts et agents du siège.</div>
+        <ul class="commit-tasks">
+          <li>Conception fonctionnelle et implémentation des briques applicatives</li>
+          <li>Maintenance évolutive et corrective, optimisation du socle</li>
+          <li>Rites agiles : sprint planning, daily scrum, démo, rétrospective</li>
+          <li>Migration de Java 7 vers Java 8/11</li>
+        </ul>
+        <div class="commit-diff">
+          <span class="chip">Java 7/8/11</span><span class="chip">Spring Boot</span><span class="chip">Spring Batch</span>
+          <span class="chip">API RESTful</span><span class="chip">React</span><span class="chip">GitLab</span>
+          <span class="chip">Maven</span><span class="chip">Nexus</span><span class="chip">Liferay</span><span class="chip">Mule</span>
+        </div>
+      </div>
+
+      <div class="commit">
+        <div class="commit-dot"></div>
+        <div class="commit-head">
+          <span class="commit-hash">#5c9a013</span>
+          <span class="commit-role">Développeur Java/Angular</span>
+        </div>
+        <div class="commit-meta"><span class="co">Mercure IT</span> · mission Eqdom · avril 2021 – avril 2023</div>
+        <div class="commit-project"><b>Sogeconso</b> — refonte de la gestion des crédits à la consommation pour SGMA. <b>Avd</b> — gestion du crédit auto classique pour Eqdom.</div>
+        <ul class="commit-tasks">
+          <li>Participation à la définition de l'architecture du projet</li>
+          <li>Conception et développement des batchs</li>
+          <li>Paramétrage GitLab (CI, pipelines, coverage)</li>
+          <li>Support technique à l'équipe, déploiement recette/production</li>
+        </ul>
+        <div class="commit-diff">
+          <span class="chip">Angular 12</span><span class="chip">React</span><span class="chip">Bootstrap</span>
+          <span class="chip">Spring Boot</span><span class="chip">JPA</span><span class="chip">Hibernate</span>
+          <span class="chip">REST</span><span class="chip">PostgreSQL</span><span class="chip">Jenkins</span><span class="chip">GitLab</span>
+        </div>
+      </div>
+
+      <div class="commit">
+        <div class="commit-dot"></div>
+        <div class="commit-head">
+          <span class="commit-hash">#310df4a</span>
+          <span class="commit-role">Développeur FullStack Java/Angular</span>
+        </div>
+        <div class="commit-meta"><span class="co">Centoria</span> · septembre 2020 – mars 2021</div>
+        <div class="commit-project"><b>RDV Artisans</b> — application de prise de rendez-vous entre artisans et internautes, France.</div>
+        <ul class="commit-tasks">
+          <li>Développement et maintenance du projet</li>
+          <li>Démos et POC, conception de batchs</li>
+          <li>Ateliers de conception et chiffrage, connexion multi-environnements</li>
+        </ul>
+        <div class="commit-diff">
+          <span class="chip">Angular</span><span class="chip">React</span><span class="chip">Ionic</span>
+          <span class="chip">Spring Boot</span><span class="chip">Struts 2</span><span class="chip">MongoDB</span>
+          <span class="chip">PostgreSQL</span><span class="chip">MySQL</span><span class="chip">Bitbucket</span>
+        </div>
+      </div>
+
+      <div class="commit">
+        <div class="commit-dot"></div>
+        <div class="commit-head">
+          <span class="commit-hash">#8b1e77f</span>
+          <span class="commit-role">Développeur FullStack Java/Angular</span>
+        </div>
+        <div class="commit-meta"><span class="co">NetSmart Web</span> · avril 2019 – septembre 2020</div>
+        <ul class="commit-tasks">
+          <li>Analyse des besoins fonctionnels</li>
+          <li>Maintenance corrective et évolutive de projets Java</li>
+          <li>Développement de composants front avec Angular</li>
+        </ul>
+        <div class="commit-diff">
+          <span class="chip">Angular</span><span class="chip">React</span><span class="chip">Spring Boot</span>
+          <span class="chip">Struts 2</span><span class="chip">Laravel PHP</span><span class="chip">MySQL</span><span class="chip">PostgreSQL</span>
+        </div>
+      </div>
+
+      <div class="commit">
+        <div class="commit-dot"></div>
+        <div class="commit-head">
+          <span class="commit-hash">#f402c9e</span>
+          <span class="commit-role">Développeur FullStack Java/Angular</span>
+        </div>
+        <div class="commit-meta"><span class="co">Info CL</span> · septembre 2019 – mars 2020</div>
+        <div class="commit-project"><b>Projet d'urbanisme</b> — modules demandes, projets, schémas.</div>
+        <ul class="commit-tasks">
+          <li>Développement de batchs</li>
+          <li>Mise en place des bonnes pratiques de développement</li>
+          <li>Planification des tâches et estimation de charges</li>
+        </ul>
+        <div class="commit-diff">
+          <span class="chip">HTML/CSS/JS</span><span class="chip">React</span><span class="chip">Angular</span>
+          <span class="chip">Spring Boot</span><span class="chip">JPA</span><span class="chip">MySQL</span><span class="chip">PostgreSQL</span>
+        </div>
+      </div>
+
+      <div class="commit">
+        <div class="commit-dot"></div>
+        <div class="commit-head">
+          <span class="commit-hash">#2a6f815</span>
+          <span class="commit-role">Développeur Java</span>
+        </div>
+        <div class="commit-meta"><span class="co">Power Square</span> · février 2019 – juin 2019</div>
+        <div class="commit-project"><b>Gestion de locations de PowerBank.</b></div>
+        <ul class="commit-tasks">
+          <li>Rédaction des spécifications fonctionnelles et techniques</li>
+          <li>Conception et développement des composants de l'application</li>
+          <li>Déploiement et maintenance corrective/évolutive</li>
+        </ul>
+        <div class="commit-diff">
+          <span class="chip">Spring Boot</span><span class="chip">JPA</span><span class="chip">Hibernate</span>
+          <span class="chip">REST</span><span class="chip">Tomcat</span><span class="chip">PostgreSQL</span><span class="chip">React Native</span>
+        </div>
+      </div>
+
+      <div class="commit">
+        <div class="commit-dot"></div>
+        <div class="commit-head">
+          <span class="commit-hash">#c19e043</span>
+          <span class="commit-role">Développeur Java</span>
+        </div>
+        <div class="commit-meta"><span class="co">LI SMART</span> · juin 2018 – janvier 2019</div>
+        <div class="commit-project"><b>Gestion des demandes administratives.</b></div>
+        <ul class="commit-tasks">
+          <li>Rédaction des spécifications, analyse et estimation de charge</li>
+          <li>Conception et développement des composants de l'application</li>
+        </ul>
+        <div class="commit-diff">
+          <span class="chip">Java 8</span><span class="chip">JSF</span><span class="chip">PrimeFaces</span>
+          <span class="chip">Spring Boot</span><span class="chip">Tomcat</span><span class="chip">PostgreSQL</span>
+        </div>
+      </div>
+
+      <div class="commit">
+        <div class="commit-dot"></div>
+        <div class="commit-head">
+          <span class="commit-hash">#0091ab7</span>
+          <span class="commit-role">Développeur Java — Freelance</span>
+        </div>
+        <div class="commit-meta"><span class="co">Upwork</span> · septembre 2017 – juin 2018</div>
+        <ul class="commit-tasks">
+          <li>Applications desktop et web (Java/PHP) pour des clients internationaux</li>
+          <li>Maintenance corrective et évolutive multi-projets</li>
+          <li>Composants front avec Angular et React</li>
+        </ul>
+        <div class="commit-diff">
+          <span class="chip">Java/JEE</span><span class="chip">PHP</span><span class="chip">Spring Boot</span>
+          <span class="chip">.NET</span><span class="chip">C/C++/C#</span><span class="chip">Kafka</span>
+          <span class="chip">Angular</span><span class="chip">React</span><span class="chip">Ionic</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FORMATION / LANGUES -->
+  <section id="formation">
+    <div class="section-head">
+      <div class="section-eyebrow">formation</div>
+      <h2 class="section-title">Formation &amp; langues</h2>
+    </div>
+    <div class="split">
+      <div>
+        <div class="edu-item">
+          <div class="edu-year">2019</div>
+          <div class="edu-title">Ingénieur d'État</div>
+          <div class="edu-sub">École Nationale des Sciences Appliquées de Khouribga</div>
+        </div>
+        <div class="edu-item">
+          <div class="edu-year">2014</div>
+          <div class="edu-title">Baccalauréat Sciences, mention Bien</div>
+        </div>
+      </div>
+      <div>
+        <div class="lang-item">
+          <span class="lang-name">Français</span>
+          <span class="lang-level">niveau opérationnel</span>
+        </div>
+        <div class="lang-item">
+          <span class="lang-name">Anglais</span>
+          <span class="lang-level">niveau opérationnel</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <footer id="contact">
+    <div class="contact-card">
+      <h2>Un projet Java à mettre en production ?</h2>
+      <p>Disponible pour missions de conseil et développement — Spring, Angular, React.</p>
+      <div class="contact-actions">
+        <button class="btn primary" id="copyEmailBtn" data-email="hamzaa.rachidii@gmail.com">copier l'e-mail</button>
+        <a class="btn" href="mailto:hamzaa.rachidii@gmail.com">écrire un e-mail</a>
+        <a class="btn" href="tel:+212664559615">+212 664 55 96 15</a>
+      </div>
+    </div>
+    <div class="foot-meta">Hamza Rachidi — Consultant Développeur Java · dernière mise à jour 2026</div>
+  </footer>
+
+</main>
+
+<script>
+  // mobile nav toggle
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  navToggle.addEventListener('click', () => {
+    const open = navLinks.classList.toggle('open');
+    navToggle.setAttribute('aria-expanded', open);
+  });
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    navLinks.classList.remove('open');
+    navToggle.setAttribute('aria-expanded', 'false');
+  }));
+
+  // terminal typing effect
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const cmdEl = document.getElementById('typedCmd');
+  const outEl = document.getElementById('typedOut');
+  const cmdText = 'cat role.txt';
+  const outText = 'Consultant Développeur Java · 9 ans · Spring / Angular / React';
+
+  function typeInto(el, text, speed, done){
+    if(reduceMotion){ el.textContent = text; if(done) done(); return; }
+    let i = 0;
+    el.textContent = '';
+    const t = setInterval(() => {
+      el.textContent += text[i];
+      i++;
+      if(i >= text.length){ clearInterval(t); if(done) done(); }
+    }, speed);
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    typeInto(cmdEl, cmdText, 45, () => {
+      setTimeout(() => typeInto(outEl, outText, 14), 200);
+    });
+  });
+
+  // copy email button
+  const copyBtn = document.getElementById('copyEmailBtn');
+  copyBtn.addEventListener('click', async () => {
+    const email = copyBtn.dataset.email;
+    try{
+      await navigator.clipboard.writeText(email);
+    }catch(e){
+      const ta = document.createElement('textarea');
+      ta.value = email; document.body.appendChild(ta); ta.select();
+      document.execCommand('copy'); document.body.removeChild(ta);
+    }
+    const original = copyBtn.textContent;
+    copyBtn.textContent = 'copié ✓';
+    copyBtn.classList.add('copied');
+    setTimeout(() => {
+      copyBtn.textContent = original;
+      copyBtn.classList.remove('copied');
+    }, 1800);
+  });
+</script>
+
+</body>
+</html>
